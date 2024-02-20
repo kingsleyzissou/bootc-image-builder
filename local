@@ -1,0 +1,20 @@
+#!/usr/bin/bash
+
+set -e pipefail
+
+sudo podman build -t bib -f Containerfile .
+
+sudo podman run \
+    --rm \
+    -it \
+    --privileged \
+    --security-opt label=type:unconfined_t \
+    -v "$(pwd)/config.json:/config.json" \
+    -v "$(pwd)/output:/output" \
+    -v "$(pwd)/store:/store" \
+    -v /test/container/storage:/var/lib/containers/storage \
+    localhost/bib:latest \
+    --type qcow2 \
+    --config /config.json \
+    --local \
+    localhost/bootc:eln
