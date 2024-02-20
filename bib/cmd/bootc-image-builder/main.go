@@ -182,6 +182,7 @@ func manifestFromCobra(cmd *cobra.Command, args []string) ([]byte, error) {
 	rpmCacheRoot, _ := cmd.Flags().GetString("rpmmd")
 	configFile, _ := cmd.Flags().GetString("config")
 	tlsVerify, _ := cmd.Flags().GetBool("tls-verify")
+	localStorage, _ := cmd.Flags().GetBool("local")
 	imgType, _ := cmd.Flags().GetString("type")
 	targetArch, _ := cmd.Flags().GetString("target-arch")
 	if targetArch != "" {
@@ -215,6 +216,7 @@ func manifestFromCobra(cmd *cobra.Command, args []string) ([]byte, error) {
 		Repos:        repos,
 		Architecture: buildArch,
 		TLSVerify:    tlsVerify,
+		Local:        localStorage,
 	}
 	return makeManifest(manifestConfig, rpmCacheRoot)
 }
@@ -351,6 +353,7 @@ func run() error {
 	manifestCmd.Flags().String("type", "qcow2", "image type to build [qcow2, ami]")
 	manifestCmd.Flags().Bool("tls-verify", true, "require HTTPS and verify certificates when contacting registries")
 	manifestCmd.Flags().String("target-arch", "", "build for the given target architecture (experimental)")
+	manifestCmd.Flags().Bool("local", false, "use a local container rather than a container from a registry")
 
 	logrus.SetLevel(logrus.ErrorLevel)
 	buildCmd.Flags().AddFlagSet(manifestCmd.Flags())
