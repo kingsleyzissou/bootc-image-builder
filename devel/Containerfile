@@ -10,7 +10,7 @@ RUN make rpm
 
 FROM registry.fedoraproject.org/fedora:39 AS bib-builder
 # replace osbuild/images dependency and build bib
-RUN dnf install -y git-core golang gpgme-devel libassuan-devel
+RUN dnf install -y git-core golang gpgme-devel libassuan-devel device-mapper-devel
 COPY --from=images . /build/images
 COPY bib /build/bib
 COPY build.sh /build

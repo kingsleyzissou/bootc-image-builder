@@ -1,5 +1,5 @@
 FROM registry.fedoraproject.org/fedora:39 AS builder
-RUN dnf install -y git-core golang gpgme-devel libassuan-devel && mkdir -p /build/bib
+RUN dnf install -y git-core golang gpgme-devel libassuan-devel device-mapper-devel && mkdir -p /build/bib
 COPY bib/go.mod bib/go.sum /build/bib
 RUN cd /build/bib && go mod download
 COPY build.sh /build
