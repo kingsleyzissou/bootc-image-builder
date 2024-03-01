@@ -2,7 +2,7 @@
 
 set -e pipefail
 
-sudo podman build -t bib -f Containerfile .
+sudo podman build -t bib --build-context=osbuild=../osbuild --build-context=images=../images -f devel/Containerfile .
 
 sudo podman run \
     --rm \
